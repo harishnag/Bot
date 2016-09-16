@@ -1,0 +1,28 @@
+#!/bin/sh
+
+set -e
+
+if [ "$(which docker-machine)" != "" ]; then
+  eval $(docker-machine env dev)
+fi;
+
+ROOT=$(cd `dirname $0` && pwd)
+CLI_IMAGE=flipstone/haitatsu:$HAITATSU_VERSION
+
+if [ "$AWS_ROOT" = "" ]; then
+  AWS_ROOT=$HOME
+fi;
+
+if [ "$CIRCLECI" = "" ]; then
+  DOCKER_RM="--rm"
+fi;
+
+echo $AWS_ROOT
+
+docker run \
+  -it $DOCKER_RM \
+  -v "$ROOT/deploy:/deploy" \
+  -v "$AWS_ROOT/.aws:/root/.aws" \
+  $CLI_IMAGE \
+  $@
+

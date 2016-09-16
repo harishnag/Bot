@@ -1,0 +1,14 @@
+{
+  "name": "fakes3",
+  "private": true,
+  "version": "1.0.0",
+  "description": "A Fake S3 Service for Testing the Deploybot",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "dependencies": {
+    "s3rver": "0.0.5"
+  }
+}

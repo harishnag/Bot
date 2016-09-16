@@ -1,0 +1,8 @@
+family: deploybot-task
+containerDefinitions:
+  - name: deploybot
+    image: ${repo}:${version}
+    cpu: 512
+    memory: 512
+    essential: true
+

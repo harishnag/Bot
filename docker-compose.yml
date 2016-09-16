@@ -1,0 +1,60 @@
+deploybot:
+  #used to emulate production env with Track2 repo mounted by deploybot
+  #image: shaytacblackbook/node0129withcredit
+  #image: blackbook/deploybot:awscli
+  image: node:5.2.0
+# would be nice to give our container a nicer name.
+  # this requires docker-compose 1.4.0, which wont
+  # work on circleci until a newer version of docker
+  # is available on circleci
+  #
+  # container_name: deploybot
+  volumes:
+    - ${PWD}:/deploybot
+  #  - ${PWD}/aws:/root/.aws
+  stdin_open: true
+  tty: true
+  working_dir: /deploybot
+  command: ./bin/hubot
+  #debug port
+  expose:
+    - 5858
+  ports:
+    - 5858:5858
+  links:
+    - fakes3:fakes3
+    - fakesqs:fakesqs
+  environment:
+    S3_ENDPOINT: http://fakes3:4568
+    SQS_ENDPOINT: http://fakesqs:4569
+    HAITATSU_OPTIONS: --dry-run
+    CONFIG_BUCKET: veretech-deploybot-config
+    CONFIG_KEY: config-1.0.json
+    HUBOT_SHELL_USER_NAME: bob
+
+fakes3:
+  image: node:0.12.9
+  # would be nice to give our container a nicer name.
+  # this requires docker-compose 1.4.0, which wont
+  # work on circleci until a newer version of docker
+  # is available on circleci
+  #
+  # container_name: deploybot
+  volumes:
+    - ${PWD}/fakes3:/fakes3
+  working_dir: /fakes3
+  command: ./fakes3 -h 0.0.0.0 -d ./data
+  expose:
+    - 4568
+  ports:
+    - 4568:4568
+
+fakesqs:
+  image: behance/fake-sqs
+  command: -p 4569 --database /deploybot/fakesqs.yml
+  volumes:
+    - $PWD:/deploybot
+  expose:
+    - 4569
+  ports:
+    - 4569:4569

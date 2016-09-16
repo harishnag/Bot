@@ -1,0 +1,67 @@
+{
+  "requestExpirationMinutes": 15
+, "prod": {
+    "chatroom": "bbo_prod"
+  , "newRelic": {
+      "apiKey" : "e523027413e20d66ccb9fcf9b19c1eb66016ab5061a665f"
+    , "applicationId": "16130811"
+    }
+  , "approvers": [
+      "Charise Ball"
+    , "Steve Knight"
+    , "Laird Popkin"
+    , "Shraddha B"
+    , "Scott Conley"
+    , "David Vollbracht"
+    , "Bob"
+    ]
+  }
+, "qa": {
+    "chatroom": "bbo_qa"
+  , "no_concur_required": true
+  , "approvers":[
+      "Charise Ball"
+    , "Steve Knight"
+    , "Laird Popkin"
+    , "Shraddha B"
+    , "Scott Conley"
+    , "David Vollbracht"
+    , "Craig Walker"
+    , "Avani Talari"
+    ]
+  }
+, "staging": {
+    "chatroom": "bbo_sit"
+  , "no_concur_required": true
+  , "approvers":[
+      "Charise Ball"
+    , "Steve Knight"
+    , "Laird Popkin"
+    , "Shraddha B"
+    , "Scott Conley"
+    , "David Vollbracht"
+    , "Craig Walker"
+    , "BBO Deploybot"
+    ]
+  }
+, "dev": {
+    "chatroom": "bbo_dev"
+  , "no_concur_required": true
+  , "approvers":[
+      "Harish Kumar Nagaraj"
+    , "Anthony Cruz"
+    , "Avani Talari"
+    , "Avi Hack"
+    , "Shraddha B"
+    , "Charise Ball"
+    ]
+  }
+, "sqs": {
+    "region": "us-east-1"
+  , "inboxQueueUrl": "https://sqs.us-east-1.amazonaws.com/131778002569/deploybot-inbox-queue"
+  }
+, "autodeploy": {
+    "environment": "staging"
+  , "chatroom": "219422_bbo_sit@conf.hipchat.com"
+  }
+}

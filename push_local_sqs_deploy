@@ -1,0 +1,8 @@
+#!/bin/sh
+
+aws --endpoint \
+  http://$(docker-machine ip dev):4569 sqs send-message \
+  --queue-url http://fakesqs:4569/deploybot-inbox-queue \
+  --message-body \
+  "{\"Records\":[{\"eventVersion\":\"2.0\",\"eventSource\":\"aws:s3\",\"awsRegion\":\"us-east-1\",\"eventTime\":\"2015-09-09T18:47:28.691Z\",\"eventName\":\"ObjectCreated:Put\",\"userIdentity\":{\"principalId\":\"AWS:AIDAIDI23ICV4CXK6P7FM\"},\"requestParameters\":{\"sourceIPAddress\":\"162.17.112.173\"},\"responseElements\":{\"x-amz-request-id\":\"F132C20C602A989F\",\"x-amz-id-2\":\"rQPKb1ED5kp158qLL6dlaOL3VPQTSsDvQW7Y0rrNre2hPwTi8f6NtQUcuF1pNgN9\"},\"s3\":{\"s3SchemaVersion\":\"1.0\",\"configurationId\":\"Push to Deploybot Inbox Queue\",\"bucket\":{\"name\":\"veretech-deploybot-inbox\",\"ownerIdentity\":{\"principalId\":\"AM1BWA8YK1Q4K\"},\"arn\":\"arn:aws:s3:::veretech-deploybot-inbox\"},\"object\":{\"key\":\"Track2/SHA123.tbz\",\"size\":17,\"eTag\":\"53ee167781c3508c7c9fe3626000c7f6\",\"sequencer\":\"0055F07EC0A539CEDB\"}}}]}" 
+

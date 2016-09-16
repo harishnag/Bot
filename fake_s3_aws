@@ -1,0 +1,7 @@
+#!/bin/sh
+
+aws --endpoint \
+  http://$(docker-machine ip dev):4568 \
+  s3 \
+  $@
+

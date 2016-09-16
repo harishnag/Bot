@@ -1,0 +1,9 @@
+production:
+  task_definition_template: task.yml
+  cluster_name: DeployBot
+  service_name: DeployBotService
+  service_role: ecsServiceRole
+  region: NorthVirginia
+  desired_count: 1
+  health_check_timeout_seconds: 600
+

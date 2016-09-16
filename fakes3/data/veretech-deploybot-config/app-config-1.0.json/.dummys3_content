@@ -1,0 +1,17 @@
+{
+  "salesforce":{
+      "dev": {
+         "appcluster": "Salesforce-dev",
+         "appservice": "salesforce-dev",
+         "apptaskdefinition": "salesforce",
+         "appimage":"salesforce"
+      },
+      "staging": {
+	      "appcluster": "Salesforce-dev",
+	      "appservice": "salesforce-dev",
+	      "apptaskdefinition": "salesforce",
+        "appimage":"salesforce"
+      }
+  }
+}
+

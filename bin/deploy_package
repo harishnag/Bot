@@ -1,0 +1,32 @@
+#!/bin/sh
+
+set -e
+
+RUNDIR=/var/run/deploybot
+
+BIN_DIR=$(dirname $0)
+HAITATSU="$BIN_DIR/haitatsu"
+
+ENVIRONMENT=$1
+
+PACKAGE_FILE=$2
+PACKAGE_NAME=$(basename $2)
+PACKAGE_DIR="$RUNDIR/$PACKAGE_NAME"
+
+mkdir -p $PACKAGE_DIR
+tar xf $PACKAGE_FILE -C $PACKAGE_DIR
+
+CONTEXT_FILE=$PACKAGE_DIR/deploy/context
+
+echo "Deployment Environment:" $ENVIRONMENT
+echo "Deployment Context:"
+cat $CONTEXT_FILE
+
+$HAITATSU \
+  $HAITATSU_OPTIONS \
+  -f $PACKAGE_DIR/deploy/haitatsu.yml \
+  -e $ENVIRONMENT \
+  -c @$CONTEXT_FILE \
+  deliver
+
+

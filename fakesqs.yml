@@ -1,0 +1,6 @@
+---
+queues:
+  deploybot-inbox-queue:
+    QueueName: deploybot-inbox-queue
+    Arn: arn:aws:sqs:us-east-1:93f4de446c5c87fd8fde3e49bd88aa72:deploybot-inbox-queue
+    Attributes: {}

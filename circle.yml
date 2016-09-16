@@ -1,0 +1,50 @@
+machine:
+  services:
+    - docker
+  environment:
+    DEPLOYBOT_REPO: blackbook/deploybot
+    HAITATSU_VERSION: 0.1.2
+
+dependencies:
+  cache_directories:
+    - circle_cache
+
+  pre:
+    - docker version
+    - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASSWORD
+    - sudo curl -L https://github.com/docker/compose/releases/download/1.3.0/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
+    - sudo chmod +x /usr/local/bin/docker-compose
+    - chmod +x ./ecs-deploy.sh
+
+  override:
+    - >
+      if [ "$CIRCLE_BRANCH" != "production" ]; then
+        ./build/apply_cached_timestamp circle_cache package.json
+        ./build/apply_cached_timestamp circle_cache npm-shrinkwrap.json
+        docker pull $DEPLOYBOT_REPO:latest
+        docker-compose run deploybot npm install
+      fi;
+
+test:
+  override:
+    - >
+      if [ "$CIRCLE_BRANCH" != "production" ]; then
+        set -e
+        docker-compose run deploybot npm test
+        cd build && ./build_deploybot $DEPLOYBOT_REPO $CIRCLE_SHA1
+        docker push $DEPLOYBOT_REPO:$CIRCLE_SHA1
+        docker push $DEPLOYBOT_REPO:latest
+      fi;
+
+deployment:
+  production:
+    branch: production
+    commands:
+      - ./ecs-deploy.sh
+
+  dev:
+    branch: dev
+    commands:
+      - ./ecs-deploy.sh
+
+

@@ -1,0 +1,14 @@
+#!/bin/sh
+
+set -e
+
+npm install
+CURRENT=$(cd `dirname $0` && pwd)
+ROOT=$(dirname $CURRENT)
+export PATH="$ROOT/node_modules/.bin:$ROOT/node_modules/hubot/node_modules/.bin:$PATH"
+#exec $ROOT/node_modules/.bin/hubot --name "deploybot" "$@"
+
+
+#exec ../node_modules/.bin/hubot --name "deploybot" "$@"
+##https://github.com/github/hubot/issues/648
+exec coffee --nodejs --debug=5858 $ROOT/node_modules/.bin/hubot  --name "deploybot" "$@"

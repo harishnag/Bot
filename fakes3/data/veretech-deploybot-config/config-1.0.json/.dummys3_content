@@ -1,0 +1,25 @@
+{
+  "requestExpirationMinutes": 15
+, "staging": {
+    "approvers": ["bob", "carrie", "shelly"]
+  , "chatroom": "Shell"
+  , "no_concur_required": true
+  }
+, "production": {
+    "approvers": ["bob", "carrie"]
+  , "chatroom": "Prod"
+  , "newRelic": {
+      "apiKey" : "abcd"
+    , "applicationId": "1234"
+    }
+  }
+, "sqs": {
+    "region": "us-east-1"
+  , "inboxQueueUrl": "http://fakesqs:4569/deploybot-inbox-queue"
+  }
+, "autodeploy": {
+    "environment": "staging"
+  , "chatroom": "autodeploy"
+  }
+}
+

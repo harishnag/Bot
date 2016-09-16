@@ -1,0 +1,28 @@
+#!/bin/sh
+
+set -e
+
+DOCKER_REPO=$1
+VERSION_TAG=$2
+ROOT=$(dirname $PWD)
+
+if [ "$DOCKER_REPO" = "" ]; then
+  echo "Please specify the docker repo you would like to build for";
+  exit 2;
+fi;
+
+if [ "$VERSION_TAG" = "" ]; then
+  echo "Please specify the version tag to build";
+  exit 2;
+fi;
+
+echo "Copying deploybot to container build directory"
+rm -rf deploybot/dist
+mkdir deploybot/dist
+cp -a $ROOT/bin deploybot/dist/.
+cp -a $ROOT/lib deploybot/dist/.
+cp -a $ROOT/scripts deploybot/dist/.
+cp -a $ROOT/*.json deploybot/dist/.
+
+docker build --tag $DOCKER_REPO:$VERSION_TAG deploybot
+docker tag -f $DOCKER_REPO:$VERSION_TAG $DOCKER_REPO:latest
